@@ -27,6 +27,13 @@ to_y = 0
 # 캐릭터 이동 속도
 character_speed = 0.6
 
+# 적 캐릭터 만들기
+enemy = pygame.image.load("D:\\sourceTree\\Pythone_Project1(Game)\\pygame_basic\\enemy.png")
+enemy_size = enemy.get_rect().size # 해당 이미지의 사이즈를 구해옴
+enemy_width = enemy_size[0] # 첫번째는 width
+enemy_height = enemy_size[1] # 두번째는 height
+enemy_x_pos = (screen_width / 2) - (enemy_width / 2) # 화면 X 좌표 구하기 (화면 가로 크기/2)
+enemy_y_pos = (screen_height / 2) - (enemy_height / 2) # 화면 Y 좌표 구하기 (화면 세로 크기)
 
 # 화면 타이틀 설정
 pygame.display.set_caption("JH Game")
@@ -38,7 +45,7 @@ clock = pygame.time.Clock()
 # 이벤트 루프
 running = True # 게임이 진행중인지 확인할 boolean형 변수
 while running:
-  dt = clock.tick(10) # 게임 화면의 초당 프레임 수 설정
+  dt = clock.tick(60) # 게임 화면의 초당 프레임 수 설정
   
   print("fps : " + str(clock.get_fps()))
   
@@ -85,10 +92,28 @@ while running:
   elif character_y_pos > screen_height - character_height:
     character_y_pos = screen_height - character_height
   
+  
+  # 충돌 처리를 위한 rect 정보 업데이트
+  character_rect = character.get_rect() # x,y 좌표 / width,height 가짐
+  character_rect.left = character_x_pos # 캐릭터의 x좌표
+  character_rect.top = character_y_pos # 캐릭터의 y좌표
+  
+  enemy_rect = enemy.get_rect()
+  enemy_rect.left = enemy_x_pos
+  enemy_rect.top = enemy_y_pos
+  
+  # character 와 enemy 가 만날때
+  if character_rect.colliderect(enemy_rect): # 사각형 기준으로 충돌이 있는지 확인
+    print("충돌했어요")
+    running = False
+  
   # screen.fill((50, 100, 255)) # fill = RGB를 이용해서 색을 채움
   screen.blit(background, (0,0)) # blit = 화면에 전송하다.
   
   screen.blit(character, (int(character_x_pos), int(character_y_pos)))
+  
+  # 적 캐릭터 그리기
+  screen.blit(enemy, (enemy_x_pos, enemy_y_pos))
   
   pygame.display.update() # 화면이 계속 업데이트 되게 처리해야함
   
