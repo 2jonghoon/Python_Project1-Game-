@@ -15,6 +15,8 @@
 
 import pygame # 게임 라이브러리
 from random import * # 랜덤 함수 쓰기 위함
+import pyautogui
+
 ###############################################################################################
 # 기본 초기화 (반드시 필요)
 pygame.init()
@@ -54,27 +56,7 @@ character_y_pos = screen_height - character_height
 # 캐릭터의 이동 속도
 character_speed = 0.6
 
-# 똥 리스트로 구하기
-
-def create_ddong(value):
-  ddong = []
-  for i in range(value):
-    ddong.append("ddong"+str(i))
-  return ddong
-
-
-dd = create_ddong(5)
-
-print(dd)
-
-for dong in dd:
-  dong = pygame.image.load("D:\\sourceTree\\Pythone_Project1(Game)\\pygame_basic\\ddong.png")
-  dong_size = dong.get_rect().size
-  dong_width = dong_size[0]
-  dong_height = dong_size[1]
-  
-  print(dong_width)
-
+h_value = 12
 
 # 똥 그리기
 ddong = pygame.image.load("D:\\sourceTree\\Pythone_Project1(Game)\\pygame_basic\\ddong.png")
@@ -84,10 +66,10 @@ ddong_width = ddong_size[0]
 ddong_height = ddong_size[1]
 # 똥 위치 지정 (랜덤함수 사용)
 ddong_x_pos = randint(0, (screen_width - ddong_width))
-ddong_y_pos = 0
+ddong_y_pos = h_value
 
 # 똥 내려오는 속도
-ddong_speed = 15
+ddong_speed = randint(1,20)
 
 # 똥 그리기
 ddong1 = pygame.image.load("D:\\sourceTree\\Pythone_Project1(Game)\\pygame_basic\\ddong.png")
@@ -97,10 +79,10 @@ ddong1_width = ddong1_size[0]
 ddong1_height = ddong1_size[1]
 # 똥 위치 지정 (랜덤함수 사용)
 ddong1_x_pos = randint(0, (screen_width - ddong1_width))
-ddong1_y_pos = 0
+ddong1_y_pos = h_value
 
 # 똥 내려오는 속도
-ddong1_speed = 20
+ddong1_speed = randint(1,20)
 
 # 똥 그리기
 ddong2 = pygame.image.load("D:\\sourceTree\\Pythone_Project1(Game)\\pygame_basic\\ddong.png")
@@ -110,10 +92,36 @@ ddong2_width = ddong2_size[0]
 ddong2_height = ddong2_size[1]
 # 똥 위치 지정 (랜덤함수 사용)
 ddong2_x_pos = randint(0, (screen_width - ddong2_width))
-ddong2_y_pos = 0
+ddong2_y_pos = h_value
 
 # 똥 내려오는 속도
-ddong2_speed = 7
+ddong2_speed = randint(1,20)
+
+# 똥 그리기
+ddong3 = pygame.image.load("D:\\sourceTree\\Pythone_Project1(Game)\\pygame_basic\\ddong.png")
+# 똥 사이즈 가져오기
+ddong3_size = ddong3.get_rect().size
+ddong3_width = ddong3_size[0]
+ddong3_height = ddong3_size[1]
+# 똥 위치 지정 (랜덤함수 사용)
+ddong3_x_pos = randint(0, (screen_width - ddong3_width))
+ddong3_y_pos = h_value
+
+# 똥 내려오는 속도
+ddong3_speed = randint(1,20)
+
+# 똥 그리기
+ddong4 = pygame.image.load("D:\\sourceTree\\Pythone_Project1(Game)\\pygame_basic\\ddong.png")
+# 똥 사이즈 가져오기
+ddong4_size = ddong4.get_rect().size
+ddong4_width = ddong4_size[0]
+ddong4_height = ddong4_size[1]
+# 똥 위치 지정 (랜덤함수 사용)
+ddong4_x_pos = randint(0, (screen_width - ddong4_width))
+ddong4_y_pos = h_value
+
+# 똥 내려오는 속도
+ddong4_speed = randint(1,20)
 
 # 코인 그리기 2022.12.22
 coin = pygame.image.load("D:\\sourceTree\\Pythone_Project1(Game)\\pygame_basic\\coin.png")
@@ -123,13 +131,47 @@ coin_width = coin_size[0]
 coin_height = coin_size[1]
 # 코인 위치 지정
 coin_x_pos = randint(0, (screen_width - coin_width))
-coin_y_pos = 0
+coin_y_pos = h_value
+coin_speed = randint(1,15)
+
+# 코인 그리기 2022.12.22
+coin1 = pygame.image.load("D:\\sourceTree\\Pythone_Project1(Game)\\pygame_basic\\coin1.png")
+# 코인 사이즈 가져오기
+coin1_size = coin1.get_rect().size
+coin1_width = coin1_size[0]
+coin1_height = coin1_size[1]
+# 코인 위치 지정
+coin1_x_pos = randint(0, (screen_width - coin1_width))
+coin1_y_pos = h_value
+coin1_speed = randint(1,15)
+
+# 코인 그리기 2022.12.22
+coin2 = pygame.image.load("D:\\sourceTree\\Pythone_Project1(Game)\\pygame_basic\\coin2.png")
+# 코인 사이즈 가져오기
+coin2_size = coin2.get_rect().size
+coin2_width = coin2_size[0]
+coin2_height = coin2_size[1]
+# 코인 위치 지정
+coin2_x_pos = randint(0, (screen_width - coin2_width))
+coin2_y_pos = h_value
+coin2_speed = randint(1,15)
 
 # 캐릭터의 현재 좌표 변수 저장
 to_x = 0
 
 # 코인 점수
-score = 0
+coin_score = 0
+
+# 텍스트
+# 폰트 정의
+score_font = pygame.font.Font(None, 30) # 폰트 객체 생성 (폰트, 크기)
+timer_font = pygame.font.Font(None, 30) # 폰트 객체 생성 (폰트, 크기)
+
+# 총 게임 시간
+totalTime = 60 # 60초
+start_ticks = pygame.time.get_ticks()
+
+
 
 running = True
 while running:
@@ -158,9 +200,13 @@ while running:
   ddong_y_pos += ddong_speed
   ddong1_y_pos += ddong1_speed
   ddong2_y_pos += ddong2_speed
+  ddong3_y_pos += ddong3_speed
+  ddong4_y_pos += ddong4_speed
   
   # 코인 내려오는 속도
-  coin_y_pos += 5
+  coin_y_pos += coin_speed
+  coin1_y_pos += coin1_speed
+  coin2_y_pos += coin2_speed
   
   # 캐릭터가 배경화면 밖으로 나가지 않게 설정
   if character_x_pos < 0:
@@ -175,7 +221,7 @@ while running:
   # 똥의 y 좌표가 배경화면 밖으로 나갈 경우 랜덤값으로 x좌표 재설정 하고 y좌표는 0으로 재설정
   if ddong_y_pos > screen_height:
     ddong_x_pos = randint(0, (screen_width - ddong_width))
-    ddong_y_pos = 0
+    ddong_y_pos = h_value
   
   # 똥의 x 좌표가 배경화면 밖으로 나갈 경우 랜덤값으로 x좌표 재 설정 
   if ddong1_x_pos < 0 or ddong1_x_pos > screen_width - ddong1_width:
@@ -184,7 +230,7 @@ while running:
   # 똥의 y 좌표가 배경화면 밖으로 나갈 경우 랜덤값으로 x좌표 재설정 하고 y좌표는 0으로 재설정
   if ddong1_y_pos > screen_height:
     ddong1_x_pos = randint(0, (screen_width - ddong1_width))
-    ddong1_y_pos = 0
+    ddong1_y_pos = h_value
     
   # 똥의 x 좌표가 배경화면 밖으로 나갈 경우 랜덤값으로 x좌표 재 설정 
   if ddong2_x_pos < 0 or ddong2_x_pos > screen_width - ddong2_width:
@@ -193,12 +239,40 @@ while running:
   # 똥의 y 좌표가 배경화면 밖으로 나갈 경우 랜덤값으로 x좌표 재설정 하고 y좌표는 0으로 재설정
   if ddong2_y_pos > screen_height:
     ddong2_x_pos = randint(0, (screen_width - ddong2_width))
-    ddong2_y_pos = 0
+    ddong2_y_pos = h_value
+  
+  # 똥의 x 좌표가 배경화면 밖으로 나갈 경우 랜덤값으로 x좌표 재 설정 
+  if ddong3_x_pos < 0 or ddong3_x_pos > screen_width - ddong3_width:
+    ddong3_x_pos = randint(0, (screen_width - ddong3_width))
+  
+  # 똥의 y 좌표가 배경화면 밖으로 나갈 경우 랜덤값으로 x좌표 재설정 하고 y좌표는 0으로 재설정
+  if ddong3_y_pos > screen_height:
+    ddong3_x_pos = randint(0, (screen_width - ddong3_width))
+    ddong3_y_pos = h_value
+    
+  # 똥의 x 좌표가 배경화면 밖으로 나갈 경우 랜덤값으로 x좌표 재 설정 
+  if ddong4_x_pos < 0 or ddong4_x_pos > screen_width - ddong4_width:
+    ddong4_x_pos = randint(0, (screen_width - ddong4_width))
+  
+  # 똥의 y 좌표가 배경화면 밖으로 나갈 경우 랜덤값으로 x좌표 재설정 하고 y좌표는 0으로 재설정
+  if ddong4_y_pos > screen_height:
+    ddong4_x_pos = randint(0, (screen_width - ddong4_width))
+    ddong4_y_pos = h_value
   
   # 코인의 y 좌표가 배경화면 밖으로 나갈 경우 랜덤값으로 x좌표 재설정 하고 y좌표는 0으로 재설정
   if coin_y_pos > screen_height:
-    coin_x_pos = randint(0, (screen_width - ddong_width))
-    coin_y_pos = 0
+    coin_x_pos = randint(0, (screen_width - coin_width))
+    coin_y_pos = h_value
+  
+  # 코인의 y 좌표가 배경화면 밖으로 나갈 경우 랜덤값으로 x좌표 재설정 하고 y좌표는 0으로 재설정
+  if coin1_y_pos > screen_height:
+    coin1_x_pos = randint(0, (screen_width - coin1_width))
+    coin1_y_pos = h_value
+  
+  # 코인의 y 좌표가 배경화면 밖으로 나갈 경우 랜덤값으로 x좌표 재설정 하고 y좌표는 0으로 재설정
+  if coin2_y_pos > screen_height:
+    coin2_x_pos = randint(0, (screen_width - coin2_width))
+    coin2_y_pos = h_value
     
   # 4. 충돌 처리
   # 캐릭터의 현재 좌표
@@ -213,38 +287,67 @@ while running:
   
   # 똥의 현재 좌표
   ddong1_rect = ddong1.get_rect()
-  ddong1_rect.left = ddong2_x_pos
-  ddong1_rect.top  = ddong2_y_pos
+  ddong1_rect.left = ddong1_x_pos
+  ddong1_rect.top  = ddong1_y_pos
   
   # 똥의 현재 좌표
   ddong2_rect = ddong2.get_rect()
   ddong2_rect.left = ddong2_x_pos
   ddong2_rect.top  = ddong2_y_pos
   
+  # 똥의 현재 좌표
+  ddong3_rect = ddong3.get_rect()
+  ddong3_rect.left = ddong3_x_pos
+  ddong3_rect.top  = ddong3_y_pos
+  
+  # 똥의 현재 좌표
+  ddong4_rect = ddong4.get_rect()
+  ddong4_rect.left = ddong4_x_pos
+  ddong4_rect.top  = ddong4_y_pos
+  
   # 코인과 충돌하면 코인 1씩 증가
   coin_rect = coin.get_rect()
   coin_rect.left = coin_x_pos
   coin_rect.top  = coin_y_pos
-
+  
+  # 코인과 충돌하면 코인 1씩 증가
+  coin1_rect = coin1.get_rect()
+  coin1_rect.left = coin1_x_pos
+  coin1_rect.top  = coin1_y_pos
+  
+  # 코인과 충돌하면 코인 1씩 증가
+  coin2_rect = coin2.get_rect()
+  coin2_rect.left = coin2_x_pos
+  coin2_rect.top  = coin2_y_pos
+  
   if character_rect.colliderect(ddong_rect):
-    print("게임종료")
     running = False
-  elif character_rect.colliderect(ddong1_rect):
-    print("게임종료")
+  if character_rect.colliderect(ddong1_rect):
     running = False
-  elif character_rect.colliderect(ddong2_rect):
-    print("게임종료")
+  if character_rect.colliderect(ddong2_rect):
+    running = False
+  if character_rect.colliderect(ddong3_rect):
+    running = False
+  if character_rect.colliderect(ddong4_rect):
     running = False
   
   if character_rect.colliderect(coin_rect):
     # 충돌하면 점수는 1씩 증가 시키고 새로 그려야함
-    score += 1
+    coin_score += 1
     coin_x_pos = randint(0, (screen_width - coin_width))
-    coin_y_pos = 0
-    
-    
-    print("점수는 {0} 입니다.".format(score))
+    coin_y_pos = h_value
   
+  if character_rect.colliderect(coin1_rect):
+    # 충돌하면 점수는 2씩 증가 시키고 새로 그려야함
+    coin_score += 2
+    coin1_x_pos = randint(0, (screen_width - coin1_width))
+    coin1_y_pos = h_value
+  
+  if character_rect.colliderect(coin2_rect):
+    # 충돌하면 점수는 3씩 증가 시키고 새로 그려야함
+    coin_score += 3
+    coin2_x_pos = randint(0, (screen_width - coin2_width))
+    coin2_y_pos = h_value
   
   # 5. 화면에 그리기
   # 배경화면 그리기
@@ -257,14 +360,32 @@ while running:
   screen.blit(ddong, (int(ddong_x_pos), int(ddong_y_pos)))
   screen.blit(ddong1, (int(ddong1_x_pos), int(ddong1_y_pos)))
   screen.blit(ddong2, (int(ddong2_x_pos), int(ddong2_y_pos)))
-  
+  screen.blit(ddong3, (int(ddong3_x_pos), int(ddong3_y_pos)))
+  screen.blit(ddong4, (int(ddong4_x_pos), int(ddong4_y_pos)))
   
   # 코인 그리기
   screen.blit(coin, (coin_x_pos, coin_y_pos))
+  screen.blit(coin1, (coin1_x_pos, coin1_y_pos))
+  screen.blit(coin2, (coin2_x_pos, coin2_y_pos))
   
-  pygame.display.update() # 화면이 계속 업데이트 되게 처리해야함
+  score = score_font.render("Score : {0}".format(coin_score), True, (255,255,255))
+  screen.blit(score, (0, 0))
+  
+  # 타이머 집어 넣기
+  # 경과 시간 계산
+  elapsed_time = (pygame.time.get_ticks() - start_ticks) / 1000 # ticks(경과시간)은 밀리세컨드(ms) 이기 때문에 1000 으로 나눠야 초 단위로 표시
+  timer = timer_font.render("Time : " + str(int(totalTime - elapsed_time)), True, (255,255,255))  # render = 글자를 그림
+  # render(출력할 글자, True, 글자 색상)
+  screen.blit(timer, (screen_width - 150, 0))
+  
+  # 만약 시간이 0 이하이면 게임 종료
+  if totalTime - elapsed_time <= 0:
+    running = False
+    
+  if running == False:
+    pyautogui.alert("최종 스코어 : {0}점 입니다.".format(coin_score))
 
-pygame.time.delay(1000)
+  pygame.display.update() # 화면이 계속 업데이트 되게 처리해야함
 
 # pygame 종료
 pygame.quit()
