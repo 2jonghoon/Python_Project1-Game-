@@ -1,3 +1,4 @@
+import os
 from tkinter import *
 
 '''
@@ -25,26 +26,49 @@ root.title("제목 없음 - Windows 메모장")
 # 6. 프로그램 크기, 위치는 자유롭게 하되 크기 조정 가능해야 함
 root.geometry("640x480+300+100") # 가로 x 세로 + x 좌표 + y 좌표
 
+# 열기, 저장 파일 이름
+filename = "mynote.txt"
+
+# 열기 함수
+def open_file():
+  if os.path.isfile(filename): # 파일 있으면 True, 없으면 false
+    with open(filename, "r", encoding="utf8") as file:
+      txt.delete("1.0", END) # 텍스트 본문 삭제
+      txt.insert(END, file.read()) # 텍스트 본문 입력
+
+
+# 저장 함수
+def save_file():
+  with open(filename, "w", encoding="utf8") as file:
+    file.write(txt.get("1.0", END)) # 모든 내용을 가져와서 저장
+
+
 # 2. 메뉴 : 파일, 편집, 서식, 보기, 도움말
 menu = Menu(root)
 # 파일
 menu_file = Menu(menu, tearoff=0)
-menu_file.add_command(label="열기")
-menu_file.add_command(label="저장")
-menu_file.add_command(label="끝내기")
+menu_file.add_command(label="열기", command=open_file)
+menu_file.add_command(label="저장", command=save_file)
+menu_file.add_command(label="끝내기", command=root.quit)
 menu.add_cascade(label="파일", menu=menu_file)
 # 편집
-menu_edit = Menu(menu, tearoff=0)
-menu.add_cascade(label="편집", menu=menu_edit)
+menu.add_cascade(label="편집")
 # 서식
-menu_edit = Menu(menu, tearoff=0)
-menu.add_cascade(label="서식", menu=menu_edit)
+menu.add_cascade(label="서식")
 # 보기
-menu_edit = Menu(menu, tearoff=0)
-menu.add_cascade(label="보기", menu=menu_edit)
+menu.add_cascade(label="보기")
 # 도움말
-menu_edit = Menu(menu, tearoff=0)
-menu.add_cascade(label="도움말", menu=menu_edit)
+menu.add_cascade(label="도움말")
+
+# 스크롤 바
+scrollbar = Scrollbar(root)
+scrollbar.pack(side="right", fill="y")
+
+# 본문 영역
+txt = Text(root, yscrollcommand=scrollbar.set)
+txt.pack(side="left", fill="both", expand=True)
+scrollbar.config(command=txt.yview)
 
 root.config(menu=menu)
+
 root.mainloop()
